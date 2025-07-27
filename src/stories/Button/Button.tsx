@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
     export interface ButtonValues {
 
-      
   label: string;
   disabled?: boolean;
   bgColor?: string;

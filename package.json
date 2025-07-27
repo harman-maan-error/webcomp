@@ -44,7 +44,8 @@
     "test": "jest",
     "lint": "eslint . --ext .ts,.tsx",
     "prepare": "husky install",
-    "format": "prettier --check .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build": "react-scripts build"
