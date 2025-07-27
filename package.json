@@ -42,7 +42,7 @@
   },
   "scripts": {
     "test": "jest",
-    "lint": "eslint . --ext .ts,.tsx --config .eslintrc.json",
+    "lint": "eslint . --ext .ts,.tsx",
     "prepare": "husky install",
     "format": "prettier --check .",
     "storybook": "storybook dev -p 6006",
