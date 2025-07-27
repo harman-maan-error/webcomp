@@ -5,7 +5,7 @@ export interface ButtonValues {
   label: string;
   disabled?: boolean;
   bgColor?: string;
-  textColor?: string;
+  textColor?: string
   onClick?: () => void;
 }
 
