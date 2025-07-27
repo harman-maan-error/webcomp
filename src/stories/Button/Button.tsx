@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-    export interface ButtonValues {
-
+export interface ButtonValues {
   label: string;
   disabled?: boolean;
   bgColor?: string;
@@ -20,14 +19,16 @@ const ModifiedButton = styled.button<{
   padding: 12px 18px;
   border: none;
   border-radius: 10px;
-  cursor: ${props => props.$disabled ? 'not-allowed' : 'pointer'};
-  background-color: ${props => props.$disabled ? '#cccccc' : props.$bgColor || '#1ea7fd'};
-  color: ${props => props.$disabled ? '#666666' : props.$textColor || 'white'};
-  opacity: ${props => props.$disabled ? 0.7 : 1};
+  cursor: ${props => (props.$disabled ? 'not-allowed' : 'pointer')};
+  background-color: ${props =>
+    props.$disabled ? '#cccccc' : props.$bgColor || '#1ea7fd'};
+  color: ${props =>
+    props.$disabled ? '#666666' : props.$textColor || 'white'};
+  opacity: ${props => (props.$disabled ? 0.7 : 1)};
   transition: all 0.2s;
 
   &:hover {
-    opacity: ${props => props.$disabled ? 0.7 : 0.9};
+    opacity: ${props => (props.$disabled ? 0.7 : 0.9)};
   }
 `;
 

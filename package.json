@@ -50,6 +50,16 @@
     "build-storybook": "storybook build",
     "build": "react-scripts build"
   },
+    "prettier": {
+      "semi": true,
+      "singleQuote": true,
+      "jsxSingleQuote": true,
+      "tabWidth": 2,
+      "trailingComma": "es5",
+      "printWidth": 80,
+      "bracketSpacing": true,
+      "arrowParens": "avoid"
+  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
