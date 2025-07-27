@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export interface ButtonValues {
+    export interface ButtonValues {
+
+      
   label: string;
   disabled?: boolean;
   bgColor?: string;
@@ -47,5 +49,5 @@ export const Button: React.FC<ButtonValues> = ({
     >
       {label}
     </ModifiedButton>
-  )
+  );
 };
