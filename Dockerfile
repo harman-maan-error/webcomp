@@ -1,29 +1,40 @@
-# Stage 1: Build the Storybook static files
-FROM node:20 AS build
+# Stage 1: Build Storybook
+FROM node:18-alpine AS builder
 
-# Set working directory
-WORKDIR /usr/src/singh_harmandeep_ui_garden
+# Set working directory to match your path
+WORKDIR /assignment4-webcomponent-library-hsingh20/singh_harmandeep_ui_garden
 
-# Copy package.json and package-lock.json
+# Copy package files first for better caching
 COPY package*.json ./
+COPY .husky ./.husky
+COPY eslint.config.js ./
+COPY .prettier* ./
 
-# Install dependencies
+# Install dependencies including Storybook
 RUN npm install
+RUN npx husky install
 
 # Copy all source files
 COPY . .
 
-# Build storybook static files (adjust if your build command differs)
+# Run quality checks
+RUN npm run format:check
+RUN npm test
+
+# Build Storybook static files
 RUN npm run build-storybook
 
-# Stage 2: Serve the static files using nginx
+# Stage 2: Serve Storybook
 FROM nginx:alpine
 
-# Copy the built storybook static files to nginx default public folder
-COPY --from=build /usr/src/singh_harmandeep_ui_garden/storybook-static /usr/share/nginx/html
+# Copy built Storybook from builder
+COPY --from=builder /assignment4-webcomponent-library-hsingh20/singh_harmandeep_ui_garden/storybook-static /usr/share/nginx/html
 
-# Expose port 80 in container
-EXPOSE 80
+# Custom nginx config for Storybook
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Start nginx server
+# Expose port 8018
+EXPOSE 8018
+
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
