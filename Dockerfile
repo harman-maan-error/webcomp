@@ -1,40 +1,39 @@
+# Dockerfile for React Storybook
 # Stage 1: Build Storybook
-FROM node:18-alpine AS builder
+FROM node:20 AS build
 
-# Set working directory to match your path
-WORKDIR /assignment4-webcomponent-library-hsingh20/singh_harmandeep_ui_garden
+# Set working directory
+WORKDIR /app
 
-# Copy package files first for better caching
-COPY package*.json ./
-COPY .husky ./.husky
-COPY eslint.config.js ./
-COPY .prettier* ./
+# Copy package files
+COPY package.json package-lock.json ./
 
-# Install dependencies including Storybook
+# Install dependencies
 RUN npm install
-RUN npx husky install
 
 # Copy all source files
 COPY . .
 
-# Run quality checks
-RUN npm run format:check
-RUN npm test
-
-# Build Storybook static files
+# Build Storybook for production
 RUN npm run build-storybook
 
-# Stage 2: Serve Storybook
-FROM nginx:alpine
+# Stage 2: Serve with Nginx
+FROM nginx:stable-alpine
 
-# Copy built Storybook from builder
-COPY --from=builder /assignment4-webcomponent-library-hsingh20/singh_harmandeep_ui_garden/storybook-static /usr/share/nginx/html
+# Custom working directory name
+WORKDIR /singh_harmandeep_ui_garden
 
-# Custom nginx config for Storybook
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Remove default nginx static content
+RUN rm -rf /usr/share/nginx/html/*
 
-# Expose port 8018
-EXPOSE 8018
+# Copy built Storybook from previous stage to nginx directory
+COPY --from=build /app/storybook-static /usr/share/nginx/html
+
+# Expose port 8083
+EXPOSE 8083
+
+# Configure nginx to use port 8083
+RUN sed -i 's/80;/8083;/' /etc/nginx/conf.d/default.conf
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]

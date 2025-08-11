@@ -14,6 +14,12 @@ const config: StorybookConfig = {
   "framework": {
     "name": "@storybook/react-vite",
     "options": {}
+  },
+  viteFinal: async (config) => {
+    // Prevent Storybook from using React app's public folder
+    config.publicDir = false;
+    return config;
   }
 };
+
 export default config;
