@@ -20,7 +20,7 @@ npm install --legacy-peer-deps
 ```bash
 npm start
 ```
-react app will be available at `http://localhost:6006`
+react app will be available at `http://localhost:3000/`
 
 
 ## docker deployment
