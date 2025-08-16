@@ -13,25 +13,21 @@ git clone - https://github.com/harman-maan-error/webcomp
 cd singh_harmandeep_ui_garden
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
-3. **Start Storybook**
+3. **Start**
 ```bash
-npm run storybook
+npm start
 ```
-Storybook will be available at `http://localhost:6006`
+react app will be available at `http://localhost:6006`
 
-4. **Building Storybook**
-```bash
-npm run build-storybook
-```
 
 ## docker deployment
 
 ```bash
-docker build -t singh_harmandeep_ui_garden .
-docker run -p 8083:8083 singh_harmandeep_ui_garden
+docker build -t ui-garden .
+docker run -it --rm -p 5575:5575 ui-garden
 ```
 
-storybook will be avaialble at `http://localhost:8083`
+Portfolio site will be avaialble at `http://localhost:5575`

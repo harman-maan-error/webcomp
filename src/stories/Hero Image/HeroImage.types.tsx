@@ -3,4 +3,5 @@ export interface HeroImageProps {
   alt: string;
   height?: string;
   disabled?: boolean;
+  title?: string;
 }

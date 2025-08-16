@@ -1,39 +1,23 @@
-# Dockerfile for React Storybook
-# Stage 1: Build Storybook
-FROM node:20 AS build
+FROM node:18-alpine AS build
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+RUN npm install --legacy-peer-deps
 
-# Copy all source files
 COPY . .
 
-# Build Storybook for production
-RUN npm run build-storybook
+RUN npm run build
 
-# Stage 2: Serve with Nginx
-FROM nginx:stable-alpine
+FROM node:18-alpine
 
-# Custom working directory name
-WORKDIR /singh_harmandeep_ui_garden
+RUN npm install -g serve
 
-# Remove default nginx static content
-RUN rm -rf /usr/share/nginx/html/*
+WORKDIR /app
 
-# Copy built Storybook from previous stage to nginx directory
-COPY --from=build /app/storybook-static /usr/share/nginx/html
+COPY --from=build /app/build ./build
 
-# Expose port 8083
-EXPOSE 8083
+EXPOSE 5575
 
-# Configure nginx to use port 8083
-RUN sed -i 's/80;/8083;/' /etc/nginx/conf.d/default.conf
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["serve", "-s", "build", "-l", "5575"]

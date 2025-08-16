@@ -4,15 +4,14 @@ import { CardValues } from './Card.types';
 
 const ModifiedCard = styled.div<CardValues>`
   border: 2px solid #ddd;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 22px;
   padding: 10px;
   background-color: ${(props) => props.backgroundColor || '#fff'};
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  width: 50%;
-  max-width: 200px;
+  width: 100%;
   transition: all 0.5s;
 
   &:hover {
